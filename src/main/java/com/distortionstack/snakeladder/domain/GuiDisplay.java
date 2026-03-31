@@ -1,23 +1,12 @@
+package com.distortionstack.snakeladder.domain;
 import javax.swing.JFrame;
 
-public class Main {
-    public static GuiDisplay guiDisplay;
-    
-    public static void main(String[] args) {
-        AssetManager assetManager = new AssetManager(); 
-        guiDisplay = new GuiDisplay(assetManager){{
-            setVisible(true);
-        }};
-    }
+import com.distortionstack.snakeladder.include.AssetManager;
+import com.distortionstack.snakeladder.include.config.DisplayUI;
 
-    public static GuiDisplay getGuiDisplay() {
-        return guiDisplay;
-    }
-}
-
-class GuiDisplay extends JFrame {
+public class GuiDisplay extends JFrame {
     MenuPanel menuPanel;
-    GuiDisplay(AssetManager assetManager){
+    public GuiDisplay(AssetManager assetManager){
         setSize(DisplayUI.WINDOW_SIZE);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,5 +36,4 @@ class GuiDisplay extends JFrame {
         });
     }
 }
-
 

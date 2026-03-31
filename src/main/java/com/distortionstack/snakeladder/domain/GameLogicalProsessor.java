@@ -1,8 +1,12 @@
+package com.distortionstack.snakeladder.domain;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JButton;
+
+import com.distortionstack.snakeladder.include.config.GameLogical;
 
 public abstract class GameLogicalProsessor {
     //const
@@ -49,7 +53,7 @@ public abstract class GameLogicalProsessor {
         boolean found = false;
 
         // เช็คบันได (Ladders)
-        for (int[] jumpindex : GameLogical.LADDERS_UP) {
+        for (int[] jumpindex : LADDERS_UP) {
             if(gameStatus.getIndex() == jumpindex[0]){
                 gameStatus.setIndex(jumpindex[1]); // อัปเดตเป้าหมายใหม่
                 found = true;
@@ -60,7 +64,7 @@ public abstract class GameLogicalProsessor {
         
         // เช็คงู (Snakes) - ถ้ายังไม่เจอบันไดค่อยเช็ค
         if(!found) { 
-            for (int[] jumpindex : GameLogical.SNAKES_DOWN) {
+            for (int[] jumpindex : SNAKES_DOWN) {
                 if(gameStatus.getIndex() == jumpindex[0]){
                     gameStatus.setIndex(jumpindex[1]); // อัปเดตเป้าหมายใหม่
                     found = true;

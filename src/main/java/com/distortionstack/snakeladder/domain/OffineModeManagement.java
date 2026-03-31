@@ -1,3 +1,4 @@
+package com.distortionstack.snakeladder.domain;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -10,6 +11,9 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import com.distortionstack.snakeladder.Main;
+import com.distortionstack.snakeladder.include.AssetManager;
 import java.util.List;
 
 public class OffineModeManagement{
@@ -157,7 +161,7 @@ class OfflineGame extends GamePanel {
                         g.drawImage(skin.getImage(), 
                                     basePos.x + offset.x, 
                                     basePos.y + offset.y, 
-                                    GameUI.PLAYER_SIZE.width, GameUI.PLAYER_SIZE.height, this);
+                                    width, height, this);
                     }
                 }
             }

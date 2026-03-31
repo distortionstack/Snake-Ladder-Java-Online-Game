@@ -1,3 +1,4 @@
+package com.distortionstack.snakeladder.domain;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
@@ -10,6 +11,8 @@ import java.awt.Graphics;
 
 import javax.swing.BorderFactory;
 
+import com.distortionstack.include.AssetManager;
+
 public class MenuPanel extends JPanel {
     String[] TextOnButton = {"Offline Mode", "Setting", "Quit"};
     JButton[] MenuButton = new JButton[TextOnButton.length];
@@ -19,7 +22,7 @@ public class MenuPanel extends JPanel {
     JPanel contentPanel;
     AssetManager assetManager; 
 
-    MenuPanel(AssetManager assetManager) {
+    public MenuPanel(AssetManager assetManager) {
         this.assetManager = assetManager;
 
         for (int i = 0; i < TextOnButton.length; i++) {
