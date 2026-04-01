@@ -1,14 +1,8 @@
-package com.distortionstack.snakeladder.include.asset;
+package com.distortionstack.snakeladder.include.asset.game;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 import com.distortionstack.snakeladder.include.AssetManager;
 import com.distortionstack.snakeladder.include.config.GameLogical;
@@ -29,8 +23,8 @@ public class GameAsset {
     private ImageIcon BasediceButtonIcon;
     private ImageIcon diceButtonUnBlock;
     private ImageIcon diceButtonBlcoked;
-    private ImageIcon ufoDown;
-    private ImageIcon ufoUp;
+    public ImageIcon ufoDown;
+    public ImageIcon ufoUp;
     public GameAsset(){
         skinamount = GameLogical.SKINCODE_ARRAY.length;
         playerSkin = new ImageIcon[skinamount];

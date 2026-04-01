@@ -14,7 +14,9 @@ import javax.swing.JPanel;
 
 import com.distortionstack.snakeladder.Main;
 import com.distortionstack.snakeladder.include.AssetManager;
+import com.distortionstack.snakeladder.include.config.GameUI;
 import java.util.List;
+
 
 public class OffineModeManagement{
     GameOfflineLogicalProcessor logicalProcess;
@@ -161,7 +163,7 @@ class OfflineGame extends GamePanel {
                         g.drawImage(skin.getImage(), 
                                     basePos.x + offset.x, 
                                     basePos.y + offset.y, 
-                                    width, height, this);
+                                    GameUI.PLAYER_SIZE.width, GameUI.PLAYER_SIZE.height, this);
                     }
                 }
             }

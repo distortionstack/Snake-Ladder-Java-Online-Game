@@ -7,15 +7,11 @@ import java.io.File;
 
 import javax.swing.ImageIcon;
 
-import com.distortionstack.snakeladder.include.asset.GameAsset;
-
-import com.distortionstack.snakeladder.include.config.GameLogical;
-
+import com.distortionstack.snakeladder.include.asset.game.GameAsset;
 
 public class AssetManager {
     static String slash = File.separator;
-    static String UserDir = System.getProperty("user.dir");
-
+    static String UserDir = 
     private MenuAsset menuAsset;
     private GameAsset gameAsset;
 

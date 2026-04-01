@@ -11,7 +11,7 @@ import java.awt.Graphics;
 
 import javax.swing.BorderFactory;
 
-import com.distortionstack.include.AssetManager;
+import com.distortionstack.snakeladder.include.AssetManager;
 
 public class MenuPanel extends JPanel {
     String[] TextOnButton = {"Offline Mode", "Setting", "Quit"};

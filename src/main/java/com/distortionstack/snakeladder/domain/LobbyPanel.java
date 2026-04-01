@@ -1,11 +1,11 @@
 package com.distortionstack.snakeladder.domain;
 
 import com.distortionstack.snakeladder.include.AssetManager;
-import com.distortionstack.snakeladder.include.config.GameUI;
 import com.distortionstack.snakeladder.include.config.GameLogical;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;

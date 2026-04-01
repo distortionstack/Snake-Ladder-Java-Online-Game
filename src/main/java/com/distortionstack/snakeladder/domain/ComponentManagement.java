@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import com.distortionstack.snakeladder.include.config.DisplayUI;
 import com.distortionstack.snakeladder.include.config.GameLogical;
 import com.distortionstack.snakeladder.include.config.GameUI;
+import com.distortionstack.snakeladder.include.AssetManager;
 
 public abstract class ComponentManagement {
 
@@ -31,16 +32,16 @@ abstract class GamePanel extends JPanel {
     // - component
     JButton diceButton;
     ImageIcon bgImageIcon;
-    Point [] onePlayerPoint = new Point[INDEX_AMOUNT];
-    JLabel [] upJLabels = new JLabel[length];
-    JLabel [] downJLabels = new JLabel[length];
+    Point [] onePlayerPoint = new Point[GameLogical.INDEX_AMOUNT];
+    JLabel [] upJLabels = new JLabel[GameLogical.LADDERS_UP.length];
+    JLabel [] downJLabels = new JLabel[GameLogical.SNAKES_DOWN.length];
     
     GamePanel(AssetManager assetManager){
         //assign
         this.assetManager = assetManager;
         bgImageIcon = assetManager.getGameAsset().getGameBackGround();
         diceButton = new JButton(){{
-            setBounds(new Rectangle(DICE_BUTTON_POINT,DICE_BUTTON_DIMENSION));
+            setBounds(new Rectangle(GameUI.DICE_BUTTON_POINT,GameUI.DICE_BUTTON_DIMENSION));
             setIcon(assetManager.getGameAsset().getDiceButtonUnBlock());
             setContentAreaFilled(false); // ปิดการระบายสีพื้นหลังปุ่ม
             setBorderPainted(false);     // ปิดขอบปุ่ม
@@ -57,7 +58,7 @@ abstract class GamePanel extends JPanel {
 
         //config this class
         setLayout(null);
-        setPreferredSize(WINDOW_SIZE);
+        setPreferredSize(DisplayUI.WINDOW_SIZE);
 
         //config other
         PositionSetUP();
@@ -70,7 +71,7 @@ abstract class GamePanel extends JPanel {
     }
 
     public void PositionSetUP(){
-        onePlayerPoint[0] = START_POINT_ONE_PLAYER;
+        onePlayerPoint[0] = GameUI.START_POINT_ONE_PLAYER;
         // กำหนดจุดเริ่มต้นช่องที่ 1 (มุมล่างซ้าย)
         onePlayerPoint[1] = new Point(420, 570); // ปรับตำแหน่งช่อง 1
         int cellWidth = 56;
@@ -97,10 +98,10 @@ abstract class GamePanel extends JPanel {
 
         // ตั้งค่าป้ายลูกศรขึ้น (Ladder Up)
         for (int i = 0; i < upJLabels.length; i++) {
-            int tileIndex = LADDERS_UP[i][0]; // ดูว่าบันไดเริ่มช่องไหน
+            int tileIndex = GameLogical.LADDERS_UP[i][0]; // ดูว่าบันไดเริ่มช่องไหน
             if (tileIndex < onePlayerPoint.length && onePlayerPoint[tileIndex] != null) {
                 Point p = onePlayerPoint[tileIndex];          
-                upJLabels[i].setBounds(p.x - Tunner, p.y - Tunner - (tileIndex/12 - 1), width, height);
+                upJLabels[i].setBounds(p.x - Tunner, p.y - Tunner - (tileIndex/12 - 1), GameUI.LADDER_AND_SNAKES_CELL_SIZE.width, GameUI.LADDER_AND_SNAKES_CELL_SIZE.height);
                 upJLabels[i].setBorder(javax.swing.BorderFactory.createLineBorder(Color.RED, 2));
                 add(upJLabels[i]);
             }
@@ -108,16 +109,16 @@ abstract class GamePanel extends JPanel {
             // ใส่รูป + ย่อ (ใช้ scaleImage ที่มีอยู่แล้ว)
             ImageIcon originalUp = assetManager.getGameAsset().getArrow_up();
             if (originalUp != null) {
-                upJLabels[i].setIcon(assetManager.scaleImage(originalUp, width, height));
+                upJLabels[i].setIcon(assetManager.scaleImage(originalUp, GameUI.LADDER_AND_SNAKES_CELL_SIZE.width, GameUI.LADDER_AND_SNAKES_CELL_SIZE.height));
             }
         }
         // ตั้งค่าป้ายลูกศรลง (Snake Down)
         for (int i = 0; i < downJLabels.length; i++) {
-            int tileIndex = SNAKES_DOWN[i][0]; // ดูว่างูเริ่มช่องไหน
+            int tileIndex = GameLogical.SNAKES_DOWN[i][0]; // ดูว่างูเริ่มช่องไหน
            
             if (tileIndex < onePlayerPoint.length && onePlayerPoint[tileIndex] != null) {
                 Point p = onePlayerPoint[tileIndex];
-                downJLabels[i].setBounds(p.x - Tunner, p.y - Tunner - (tileIndex/12 - 1), width, height);
+                downJLabels[i].setBounds(p.x - Tunner, p.y - Tunner - (tileIndex/12 - 1), GameUI.LADDER_AND_SNAKES_CELL_SIZE.width, GameUI.LADDER_AND_SNAKES_CELL_SIZE.height);
                 downJLabels[i].setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLUE, 2));
                 add(downJLabels[i]);
             }
@@ -125,7 +126,7 @@ abstract class GamePanel extends JPanel {
             // ใส่รูป + ย่อ (ใช้ scaleImage ที่มีอยู่แล้ว)
             ImageIcon originalUp = assetManager.getGameAsset().getArrow_down();
             if (originalUp != null) {
-                downJLabels[i].setIcon(assetManager.scaleImage(originalUp, width, height));
+                downJLabels[i].setIcon(assetManager.scaleImage(originalUp, GameUI.LADDER_AND_SNAKES_CELL_SIZE.width, GameUI.LADDER_AND_SNAKES_CELL_SIZE.height));
             }
 
             ImageIcon testIcon = assetManager.getGameAsset().getArrow_up();
@@ -226,8 +227,8 @@ abstract class GamePanel extends JPanel {
     }
 }
 
-public abstract class LobbyPanel extends JPanel {
-    JButton [] selectSkinButton = new JButton[SKINCODE_ARRAY_LENGTH];
+abstract class LobbyPanel extends JPanel {
+    JButton [] selectSkinButton = new JButton[GameLogical.SKINCODE_ARRAY_LENGTH];
     JPanel selectSkinPanel;
     JLabel LobbyLabel;
     JPanel operationPanel;
@@ -237,7 +238,7 @@ public abstract class LobbyPanel extends JPanel {
         
         for (int i = 0; i < selectSkinButton.length; i++) {
             selectSkinButton[i] = new JButton();
-            selectSkinButton[i].setText(SKINCODE_ARRAY[i]);
+            selectSkinButton[i].setText(GameLogical.SKINCODE_ARRAY[i]);
         }
 
         //set up
@@ -271,4 +272,3 @@ public abstract class LobbyPanel extends JPanel {
         return selectSkinButton;
     }
 }
-
