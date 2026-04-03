@@ -1,10 +1,10 @@
-package com.distortionstack.snakeladder.include.asset.game;
+package com.distortionstack.snakeladder.include.asset.menu;
 
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.ImageIcon;
 
-public class GameAsset {
+public class MenuAsset {
     private final Map<String, ImageIcon> map = new HashMap<>();
 
     public void put(String key, ImageIcon icon) { map.put(key, icon); }

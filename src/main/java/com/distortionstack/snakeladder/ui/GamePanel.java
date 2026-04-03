@@ -1,28 +1,5 @@
-package com.distortionstack.snakeladder.domain;
-import java.awt.GridLayout;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+package com.distortionstack.snakeladder.ui;
 
-import com.distortionstack.snakeladder.include.config.DisplayUI;
-import com.distortionstack.snakeladder.include.config.GameLogical;
-import com.distortionstack.snakeladder.include.config.GameUI;
-import com.distortionstack.snakeladder.include.AssetManager;
-
-public abstract class ComponentManagement {
-
-}
 
 abstract class GamePanel extends JPanel {
     // กำหนดระยะห่างของ "จุด" บนลูกเต๋า (ปรับเลขนี้ถ้าอยากให้ห่างกันมากขึ้น/น้อยลง)
@@ -224,51 +201,5 @@ abstract class GamePanel extends JPanel {
                         setUndecorated(true);
                         setAlwaysOnTop(true);
                 }};
-    }
-}
-
-abstract class LobbyPanel extends JPanel {
-    JButton [] selectSkinButton = new JButton[GameLogical.SKINCODE_ARRAY_LENGTH];
-    JPanel selectSkinPanel;
-    JLabel LobbyLabel;
-    JPanel operationPanel;
-    AssetManager assetManager;
-    LobbyPanel(AssetManager assetManager){
-        this.assetManager = assetManager;
-        
-        for (int i = 0; i < selectSkinButton.length; i++) {
-            selectSkinButton[i] = new JButton();
-            selectSkinButton[i].setText(GameLogical.SKINCODE_ARRAY[i]);
-        }
-
-        //set up
-        setForeground(Color.WHITE);
-
-        selectSkinPanel = new JPanel(){{
-            setOpaque(false);
-            setLayout(new GridLayout(2, 3,40,40));
-            for (int i = 0; i < selectSkinButton.length; i++) {
-                add(selectSkinButton[i]);
-            }
-        }};
-
-        LobbyLabel = new JLabel(){{
-            setFont(new Font("Tohama",Font.BOLD,50));
-            setHorizontalAlignment(JLabel.CENTER);
-            setVerticalAlignment(JLabel.CENTER);
-            setText("Select Charector Room");
-            setBackground(Color.RED);
-            setForeground(Color.WHITE);
-            
-        }};
-    }
-    @Override
-    protected void paintComponent(Graphics g) {
-        // TODO Auto-generated method stub
-        super.paintComponent(g);
-        g.drawImage(assetManager.getGameAsset().getMenubackground().getImage(), 0, 0, this);
-    }
-    public JButton[] getSelectSkinButton() {
-        return selectSkinButton;
     }
 }
