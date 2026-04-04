@@ -9,7 +9,7 @@ class GameServer extends GameLogicalProsessor{
     }
 }
 
-class GameClient extends ComponentManagement {
+class GameClient {
     OnlineModeManagement online;
     GameClient(OnlineModeManagement online) {
         this.online = online;

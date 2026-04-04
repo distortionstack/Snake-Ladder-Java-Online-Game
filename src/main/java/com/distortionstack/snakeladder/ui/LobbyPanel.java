@@ -1,4 +1,4 @@
-package com.distortionstack.snakeladder.domain;
+package com.distortionstack.snakeladder.ui;
 
 import com.distortionstack.snakeladder.include.AssetManager;
 import com.distortionstack.snakeladder.include.config.GameLogical;
@@ -18,7 +18,7 @@ public abstract class LobbyPanel extends JPanel {
     JLabel LobbyLabel;
     JPanel operationPanel;
     AssetManager assetManager;
-    LobbyPanel(AssetManager assetManager){
+    public LobbyPanel(AssetManager assetManager){
         this.assetManager = assetManager;
         
         for (int i = 0; i < selectSkinButton.length; i++) {

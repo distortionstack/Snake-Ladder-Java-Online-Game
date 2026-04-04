@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assets namespace="game">
+
+    <image key="background" file="background.png"/>
+
+    <group key="dice">
+        <image key="1" file="dice1.png"/>
+        <image key="2" file="dice2.png"/>
+        <image key="3" file="dice3.png"/>
+        <image key="4" file="dice4.png"/>
+        <image key="5" file="dice5.png"/>
+        <image key="6" file="dice6.png"/>
+    </group>
+
+    <group key="player">
+        <image key="blue"   file="player_blue.png"/>
+        <image key="yellow" file="player_yellow.png"/>
+        <image key="red"    file="player_red.png"/>
+        <image key="white"  file="player_white.png"/>
+        <image key="green"  file="player_green.png"/>
+        <image key="purple" file="player_purple.png"/>
+    </group>
+
+    <group key="ufo">
+        <image key="up"   file="ufo_up.gif"/>
+        <image key="down" file="ufo_down.gif"/>
+    </group>
+
+    <group key="arrow">
+        <image key="up"   file="up.gif"   scale_w="40" scale_h="40"/>
+        <image key="down" file="down.gif" scale_w="40" scale_h="40"/>
+    </group>
+
+    <group key="dice_button">
+        <crop key="normal"   file="but_dice.png" x="0"  y="0"  width="100" height="50"/>
+        <crop key="disabled" file="but_dice.png" x="0"  y="50" width="100" height="50"/>
+    </group>
+
+</assets>

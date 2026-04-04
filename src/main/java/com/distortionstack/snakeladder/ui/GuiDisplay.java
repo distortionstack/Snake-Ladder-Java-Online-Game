@@ -1,6 +1,7 @@
-package com.distortionstack.snakeladder.domain;
+package com.distortionstack.snakeladder.ui;
 import javax.swing.JFrame;
 
+import com.distortionstack.snakeladder.domain.offline.OffineModeManager;
 import com.distortionstack.snakeladder.include.AssetManager;
 import com.distortionstack.snakeladder.include.config.DisplayUI;
 
@@ -17,7 +18,7 @@ public class GuiDisplay extends JFrame {
 
         menuPanel.addMenuActionListener("Offline Mode", e -> {
             remove(menuPanel);
-            add(new OffineModeManagement(assetManager).getComponetManagement().getOfflineLobby());
+            add(new OffineModeManager(assetManager).getComponentManager().getOfflineLobby());
             repaint();
             revalidate();
         });

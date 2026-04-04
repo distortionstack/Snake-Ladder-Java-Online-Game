@@ -8,12 +8,11 @@ import javax.swing.JButton;
 
 import com.distortionstack.snakeladder.include.config.GameLogical;
 
-public abstract class GameLogicalProsessor {
+public abstract class GameLogicalManeger {
     //const
     
     Point[] IndexLocation = new Point[101];
     //var
-    OffineModeManagement offline;
 
     //ArrayList 
     ArrayList <PlayerData> playerList = new ArrayList<>();

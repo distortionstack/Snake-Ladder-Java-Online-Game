@@ -1,71 +1,82 @@
 package com.distortionstack.snakeladder.ui;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-abstract class GamePanel extends JPanel {
-    // กำหนดระยะห่างของ "จุด" บนลูกเต๋า (ปรับเลขนี้ถ้าอยากให้ห่างกันมากขึ้น/น้อยลง)
-    final int GAP = 10;
-    boolean debugmode = false;
-    AssetManager assetManager;
-    // - component
-    JButton diceButton;
-    ImageIcon bgImageIcon;
-    Point [] onePlayerPoint = new Point[GameLogical.INDEX_AMOUNT];
-    JLabel [] upJLabels = new JLabel[GameLogical.LADDERS_UP.length];
-    JLabel [] downJLabels = new JLabel[GameLogical.SNAKES_DOWN.length];
-    
-    GamePanel(AssetManager assetManager){
-        //assign
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import com.distortionstack.snakeladder.domain.PlayerData;
+import com.distortionstack.snakeladder.include.AssetManager;
+import com.distortionstack.snakeladder.include.config.DisplayUI;
+import com.distortionstack.snakeladder.include.config.GameLogical;
+import com.distortionstack.snakeladder.include.config.GameUI;
+
+
+public class GamePanel extends JPanel {
+
+    public final int GAP = 10;
+    protected boolean debugmode = false;
+    protected AssetManager assetManager;
+
+    protected JButton diceButton;
+    protected ImageIcon bgImageIcon;
+    protected Point[] onePlayerPoint = new Point[GameLogical.INDEX_AMOUNT];
+    protected JLabel[] upJLabels   = new JLabel[GameLogical.LADDERS_UP.length];
+    protected JLabel[] downJLabels = new JLabel[GameLogical.SNAKES_DOWN.length];
+
+    public GamePanel(AssetManager assetManager) {
         this.assetManager = assetManager;
         bgImageIcon = assetManager.getGameAsset().getGameBackGround();
-        diceButton = new JButton(){{
-            setBounds(new Rectangle(GameUI.DICE_BUTTON_POINT,GameUI.DICE_BUTTON_DIMENSION));
+
+        diceButton = new JButton() {{
+            setBounds(new Rectangle(GameUI.DICE_BUTTON_POINT, GameUI.DICE_BUTTON_DIMENSION));
             setIcon(assetManager.getGameAsset().getDiceButtonUnBlock());
-            setContentAreaFilled(false); // ปิดการระบายสีพื้นหลังปุ่ม
-            setBorderPainted(false);     // ปิดขอบปุ่ม
-            setFocusPainted(false);      // ปิดเส้นประเวลาคลิก
+            setContentAreaFilled(false);
+            setBorderPainted(false);
+            setFocusPainted(false);
         }};
 
-        for (int i = 0; i < upJLabels.length; i++) {
+        for (int i = 0; i < upJLabels.length; i++)
             upJLabels[i] = new JLabel(assetManager.getGameAsset().getArrow_up());
-        }
 
-        for (int i = 0; i < downJLabels.length; i++) {
+        for (int i = 0; i < downJLabels.length; i++)
             downJLabels[i] = new JLabel(assetManager.getGameAsset().getArrow_down());
-        }
 
-        //config this class
         setLayout(null);
         setPreferredSize(DisplayUI.WINDOW_SIZE);
-
-        //config other
         PositionSetUP();
         add(diceButton);
     }
-    //method
-    // -setter
-    public void addDiceButtonListener(ActionListener listener){
-        this.diceButton.addActionListener(listener);
+
+    public void addDiceButtonListener(ActionListener listener) {
+        diceButton.addActionListener(listener);
     }
 
-    public void PositionSetUP(){
+    public void PositionSetUP() {
         onePlayerPoint[0] = GameUI.START_POINT_ONE_PLAYER;
-        // กำหนดจุดเริ่มต้นช่องที่ 1 (มุมล่างซ้าย)
-        onePlayerPoint[1] = new Point(420, 570); // ปรับตำแหน่งช่อง 1
-        int cellWidth = 56;
+        onePlayerPoint[1] = new Point(420, 570);
+
+        int cellWidth  = 56;
         int cellHeight = 58;
-        int Tunner = 14;
+        int Tunner     = 14;
+
         for (int i = 2; i < onePlayerPoint.length; i++) {
-            int row = (i - 1) / 10;          
-            int col = (i - 1) % 10;          
-            
+            int row = (i - 1) / 10;
+            int col = (i - 1) % 10;
             if (row % 2 == 0) {
-                // แถวคี่: ซ้ายไปขวา
                 onePlayerPoint[i] = new Point(
                     onePlayerPoint[1].x + col * cellWidth,
                     onePlayerPoint[1].y - row * cellHeight
                 );
             } else {
-                // แถวคู่: ขวาไปซ้าย  
                 onePlayerPoint[i] = new Point(
                     onePlayerPoint[1].x + (9 - col) * cellWidth,
                     onePlayerPoint[1].y - row * cellHeight
@@ -73,108 +84,103 @@ abstract class GamePanel extends JPanel {
             }
         }
 
-        // ตั้งค่าป้ายลูกศรขึ้น (Ladder Up)
+        // ── Ladder Up ──
+        ImageIcon arrowUp = assetManager.getGameAsset().getArrow_up();
         for (int i = 0; i < upJLabels.length; i++) {
-            int tileIndex = GameLogical.LADDERS_UP[i][0]; // ดูว่าบันไดเริ่มช่องไหน
+            int tileIndex = GameLogical.LADDERS_UP[i][0];
             if (tileIndex < onePlayerPoint.length && onePlayerPoint[tileIndex] != null) {
-                Point p = onePlayerPoint[tileIndex];          
-                upJLabels[i].setBounds(p.x - Tunner, p.y - Tunner - (tileIndex/12 - 1), GameUI.LADDER_AND_SNAKES_CELL_SIZE.width, GameUI.LADDER_AND_SNAKES_CELL_SIZE.height);
+                Point p = onePlayerPoint[tileIndex];
+                upJLabels[i].setBounds(
+                    p.x - Tunner,
+                    p.y - Tunner - (tileIndex / 12 - 1),
+                    GameUI.LADDER_AND_SNAKES_CELL_SIZE.width,
+                    GameUI.LADDER_AND_SNAKES_CELL_SIZE.height
+                );
                 upJLabels[i].setBorder(javax.swing.BorderFactory.createLineBorder(Color.RED, 2));
                 add(upJLabels[i]);
             }
-
-            // ใส่รูป + ย่อ (ใช้ scaleImage ที่มีอยู่แล้ว)
-            ImageIcon originalUp = assetManager.getGameAsset().getArrow_up();
-            if (originalUp != null) {
-                upJLabels[i].setIcon(assetManager.scaleImage(originalUp, GameUI.LADDER_AND_SNAKES_CELL_SIZE.width, GameUI.LADDER_AND_SNAKES_CELL_SIZE.height));
-            }
+            if (arrowUp != null)
+                upJLabels[i].setIcon(AssetManager.scaleImage(arrowUp,
+                    GameUI.LADDER_AND_SNAKES_CELL_SIZE.width,
+                    GameUI.LADDER_AND_SNAKES_CELL_SIZE.height));
         }
-        // ตั้งค่าป้ายลูกศรลง (Snake Down)
+
+        // ── Snake Down ──
+        ImageIcon arrowDown = assetManager.getGameAsset().getArrow_down();
         for (int i = 0; i < downJLabels.length; i++) {
-            int tileIndex = GameLogical.SNAKES_DOWN[i][0]; // ดูว่างูเริ่มช่องไหน
-           
+            int tileIndex = GameLogical.SNAKES_DOWN[i][0];
             if (tileIndex < onePlayerPoint.length && onePlayerPoint[tileIndex] != null) {
                 Point p = onePlayerPoint[tileIndex];
-                downJLabels[i].setBounds(p.x - Tunner, p.y - Tunner - (tileIndex/12 - 1), GameUI.LADDER_AND_SNAKES_CELL_SIZE.width, GameUI.LADDER_AND_SNAKES_CELL_SIZE.height);
+                downJLabels[i].setBounds(
+                    p.x - Tunner,
+                    p.y - Tunner - (tileIndex / 12 - 1),
+                    GameUI.LADDER_AND_SNAKES_CELL_SIZE.width,
+                    GameUI.LADDER_AND_SNAKES_CELL_SIZE.height
+                );
                 downJLabels[i].setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLUE, 2));
                 add(downJLabels[i]);
             }
-
-            // ใส่รูป + ย่อ (ใช้ scaleImage ที่มีอยู่แล้ว)
-            ImageIcon originalUp = assetManager.getGameAsset().getArrow_down();
-            if (originalUp != null) {
-                downJLabels[i].setIcon(assetManager.scaleImage(originalUp, GameUI.LADDER_AND_SNAKES_CELL_SIZE.width, GameUI.LADDER_AND_SNAKES_CELL_SIZE.height));
-            }
-
-            ImageIcon testIcon = assetManager.getGameAsset().getArrow_up();
-            System.out.println("Icon width: " + testIcon.getIconWidth());
-            System.out.println("Icon height: " + testIcon.getIconHeight());
-            System.out.println("Image: " + testIcon.getImage());
-
+            if (arrowDown != null)
+                downJLabels[i].setIcon(AssetManager.scaleImage(arrowDown,
+                    GameUI.LADDER_AND_SNAKES_CELL_SIZE.width,
+                    GameUI.LADDER_AND_SNAKES_CELL_SIZE.height));
         }
-        
-        // ตรวจสอบตำแหน่ง
+
         System.out.println("=== position check ===");
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= 10; i++)
             System.out.println("ช่อง " + i + ": " + onePlayerPoint[i]);
-        }
         System.out.println("ช่อง 100: " + onePlayerPoint[100]);
+
         repaint();
         revalidate();
     }
 
-    public void drawPlayer(Graphics g , ArrayList <PlayerData> playerList){
-        if(playerList == null || playerList.isEmpty()){
+    public void drawPlayer(Graphics g, ArrayList<PlayerData> playerList) {
+        if (playerList == null || playerList.isEmpty()) {
             System.out.println("Player list is null or empty");
             return;
         }
-        
         for (PlayerData playerData : playerList) {
             int index = playerData.getgStatus().getVisibleIndex();
             if (index < 0 || index >= onePlayerPoint.length) {
                 System.out.println("Invalid index: " + index);
                 continue;
             }
-            
             ImageIcon skin = assetManager.getGameAsset().getPlayerSkin(playerData.getSkincode());
             if (skin == null || skin.getImage() == null) {
                 System.out.println("Skin not found for: " + playerData.getSkincode());
                 continue;
             }
-            
             Point position = onePlayerPoint[index];
             g.drawImage(skin.getImage(), position.x, position.y, 13, 19, this);
-            System.out.println("Drawing " + playerData.getSkincode() + " at index " + index + 
-                            " position (" + position.x + "," + position.y + ")");
         }
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if(bgImageIcon != null) {
+        if (bgImageIcon != null)
             g.drawImage(bgImageIcon.getImage(), 0, 0, this);
-        }
-        
+
+        if (!debugmode) return;
+
         g.setColor(Color.RED);
         for (int i = 0; i < onePlayerPoint.length; i++) {
-            if (onePlayerPoint[i] != null) {
-                // ดีบัก: วาดตำแหน่งทั้งหมด
-                if(!debugmode){return;}
-                if(i == 1){g.drawImage(assetManager.getGameAsset().getArrow_down().getImage(), onePlayerPoint[i].x, onePlayerPoint[i].y,20,20, this);}
-                g.fillOval(onePlayerPoint[i].x, onePlayerPoint[i].y, 5, 5);
-                g.drawString(String.valueOf(i), onePlayerPoint[i].x, onePlayerPoint[i].y - 5);
-            }
+            if (onePlayerPoint[i] == null) continue;
+            if (i == 1)
+                g.drawImage(assetManager.getGameAsset().getArrow_down().getImage(),
+                    onePlayerPoint[i].x, onePlayerPoint[i].y, 20, 20, this);
+            g.fillOval(onePlayerPoint[i].x, onePlayerPoint[i].y, 5, 5);
+            g.drawString(String.valueOf(i), onePlayerPoint[i].x, onePlayerPoint[i].y - 5);
         }
-        
     }
 
-    public void BlockDiceButton(){
+    public void BlockDiceButton() {
         diceButton.setEnabled(false);
         diceButton.setIcon(assetManager.getGameAsset().getDiceButtonBlcoked());
     }
 
-    public void UnBlockDiceButton(){
+    public void UnBlockDiceButton() {
         diceButton.setEnabled(true);
         diceButton.setIcon(assetManager.getGameAsset().getDiceButtonUnBlock());
     }
@@ -183,23 +189,17 @@ abstract class GamePanel extends JPanel {
         return diceButton;
     }
 
-    public JFrame getAnimateUFO(int New, int Old){
-        return new JFrame(){{
-                        add(new JLabel(){{
-                            if(New < Old){
-                             setIcon(assetManager.getGameAsset().ufoDown);
-                            }else{
-                             setIcon(assetManager.getGameAsset().ufoUp);
-                            }
-                        }});
-                        if(New < Old){
-                             setSize(assetManager.getGameAsset().ufoDown.getIconWidth(),assetManager.getGameAsset().ufoDown.getIconHeight());
-                        }else{
-                             setSize(assetManager.getGameAsset().ufoUp.getIconWidth(),assetManager.getGameAsset().ufoUp.getIconHeight());
-                        }
-                        setLocationRelativeTo(null);
-                        setUndecorated(true);
-                        setAlwaysOnTop(true);
-                }};
+    public JFrame getAnimateUFO(int newPos, int oldPos) {
+        ImageIcon icon = newPos < oldPos
+            ? assetManager.getGameAsset().getUfoDown()
+            : assetManager.getGameAsset().getUfoUp();
+
+        return new JFrame() {{
+            add(new JLabel(icon));
+            setSize(icon.getIconWidth(), icon.getIconHeight());
+            setLocationRelativeTo(null);
+            setUndecorated(true);
+            setAlwaysOnTop(true);
+        }};
     }
 }
