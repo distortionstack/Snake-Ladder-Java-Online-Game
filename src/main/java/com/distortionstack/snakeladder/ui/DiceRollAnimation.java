@@ -10,7 +10,7 @@ public class DiceRollAnimation {
     // timing
     private static final int SPIN_DELAY_MS = 80;
     private static final int SPIN_COUNT = 20;
-    private static final int HOLD_MS = 3500;
+    private static final int HOLD_MS = 2000;
 
     // display size
     private static final int DISPLAY_SIZE = 180; // ลูกเต๋าสี่เหลี่ยมจตุรัส

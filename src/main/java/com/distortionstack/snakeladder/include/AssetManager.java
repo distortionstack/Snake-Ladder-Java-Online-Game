@@ -71,13 +71,42 @@ public class AssetManager {
 
         if (tagName.equals("image")) {
             target.receive(fullKey, loadImage(el.getAttribute("file")));
-        } else if (tagName.equals("group")) {
+        } 
+        else if (tagName.equals("crop")) {
+            // เพิ่มส่วนนี้เพื่อรองรับปุ่มทอยลูกเต๋า!
+            ImageIcon sheet = loadImage(el.getAttribute("file"));
+            if (sheet != null) {
+                int x = Integer.parseInt(el.getAttribute("x"));
+                int y = Integer.parseInt(el.getAttribute("y"));
+                int w = Integer.parseInt(el.getAttribute("width"));
+                int h = Integer.parseInt(el.getAttribute("height"));
+                target.receive(fullKey, cropImage(sheet, x, y, w, h));
+            }
+        } 
+        else if (tagName.equals("group")) {
             NodeList children = el.getChildNodes();
             for (int i = 0; i < children.getLength(); i++) {
                 if (children.item(i).getNodeType() == Node.ELEMENT_NODE) {
                     parseElement((Element) children.item(i), ns, key + ".", target);
                 }
             }
+        }
+    }
+
+    // อย่าลืมเพิ่มเมธอด cropImage ไว้ข้างล่างด้วย (ถ้ายังไม่มี)
+    public static ImageIcon cropImage(ImageIcon src, int x, int y, int w, int h) {
+        if (src == null) return null;
+        try {
+            java.awt.image.BufferedImage buf = new java.awt.image.BufferedImage(
+                src.getIconWidth(), src.getIconHeight(), java.awt.image.BufferedImage.TYPE_INT_ARGB
+            );
+            java.awt.Graphics g = buf.getGraphics();
+            g.drawImage(src.getImage(), 0, 0, null);
+            g.dispose();
+            return new ImageIcon(buf.getSubimage(x, y, w, h));
+        } catch (Exception e) {
+            System.err.println("❌ Crop รูปพลาด: " + e.getMessage());
+            return null;
         }
     }
 
