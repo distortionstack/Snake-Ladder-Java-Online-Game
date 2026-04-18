@@ -6,7 +6,7 @@ class LobbyStatus implements Serializable {
     private static final long SerialVersionUID = 10l;
     boolean isReady;
 
-    public void setReady(boolean isReady) {
+    void setReady(boolean isReady) {
         this.isReady = isReady;
     }
 

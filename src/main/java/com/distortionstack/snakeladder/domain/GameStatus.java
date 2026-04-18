@@ -9,7 +9,7 @@ public class GameStatus implements Serializable {
     private boolean isWinner;
 
 
-    public void setIndex(int index) {
+    void setIndex(int index) {
         if (index < 0) index = 0;
         if (index > 100) {
             index = 100; // ถ้าเกิน 100 ให้ค้างไว้ที่ 100
@@ -18,7 +18,7 @@ public class GameStatus implements Serializable {
         this.index = index;
     }
 
-    public void setVisibleIndex(int visibleIndex) {
+    void setVisibleIndex(int visibleIndex) {
         if (visibleIndex < 0 || visibleIndex > 100) {
             throw new IllegalArgumentException("VisibleIndex must be 0-100");
         }

@@ -19,6 +19,7 @@ class OfflineAnimationThread extends AnimationThread {
 
     private final GameStatus    status;
     private final Runnable      onFinished; // callback เมื่อ animation จบ
+    private int startIndex = 0;
 
     OfflineAnimationThread(PlayerData playerData,
                            OfflineGamePanel offlineGamePanel,
